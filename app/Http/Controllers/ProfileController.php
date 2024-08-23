@@ -87,7 +87,7 @@ class ProfileController extends Controller
         $currentUser->increment('following_count');
         $user->increment('follower_count');
 
-        return $this->follow($user);
+        return redirect()->back()->with('success', 'Kullanıcı başarıyla takip edildi!');
     }
 
     public function unfollow(User $user)
@@ -100,8 +100,13 @@ class ProfileController extends Controller
 
         $currentUser->following()->detach($user->id);
 
-        $currentUser->decrement('following_count');
-        $user->decrement('follower_count');
+        if ($currentUser->following_count > 0) {
+            $currentUser->decrement('following_count', 1);
+        }
+
+        if ($user->follower_count > 0) {
+            $user->decrement('follower_count', 1);
+        }
 
         return redirect()->back()->with('message', 'Kullanıcıyı takip etmeyi bıraktınız.');
     }
@@ -124,18 +129,6 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('message', 'Takip isteği kabul edildi.');
     }
-
-
-    public function showFollowRequests()
-    {
-        $user = auth()->user();
-        $followRequests = $user->is_private
-            ? $user->followRequestsReceived()->where('status', 'pending')->with('follower')->get()
-            : $user->followRequestsReceived()->with('follower')->get();
-
-        return view('pages.follow_requests', compact('followRequests'));
-    }
-
 
     public function declineFollowRequest(FollowRequest $followRequest)
     {

@@ -5,7 +5,7 @@
 @endphp
 <div class="border-x border-zinc-700">
     <!-- Top -->
-    <div class="z-10 fixed bg-slate-950 w-[42.7%] flex flex-row border-b border-zinc-700">
+    <div class="z-10 fixed bg-slate-950 w-[43.5%] flex flex-row border-b border-zinc-700">
         <div class="flex ml-2 h-16 justify-center items-center">
             <div class="relative group hover:bg-zinc-900 rounded-full">
                 <a href="{{ route('index') }}">
@@ -24,13 +24,13 @@
         <img src="{{ $user->background_image ? asset('storage/' . $user->background_image) : asset('images/fon.jpg') }}" alt="" class="h-72 w-full">
     </div>
     <div class="relative ml-4 ">
-        <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/profile.png') }}" alt="" class="rounded-full w-32 outline outline-4 -top-20 absolute">
+        <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/profile.png') }}" alt="" class="rounded-full max-w-32 outline outline-4 -top-20 absolute">
         <div class="flex justify-end mt-3 mr-4 space-x-5 text-white">
             <i class="material-icons outline outline-offset-2 outline-1 rounded-full">more_horiz</i>
             <i class="material-icons outline outline-offset-2 outline-1 rounded-full">mail</i>
             <i class="material-icons outline outline-offset-2 outline-1 rounded-full">notifications</i>
             @if (auth()->check() && auth()->user()->id !== $user->id)
-                <a href="{{ route('profile.index', ['id' => $user->id]) }}" class="material-icons block outline outline-offset-2 outline-1 rounded-full block-button" data-user-id="{{ $user->user_id }}">block</a>
+                <a href="{{ route('profile.index', ['id' => $user->id]) }}" class="material-icons block outline outline-offset-2 outline-1 rounded-full block-button" data-user-id="{{ $user->id }}">block</a>
             @endif
             @if(auth()->check() && auth()->user()->id === $user->id)
             <a href="{{ route('profile.edit') }}">
@@ -43,7 +43,7 @@
                     <form action="{{ route('unblock.user', ['user' => $user->id]) }}" method="POST">
                         @csrf
                         <button type="submit" class="border border-white rounded-full px-4">
-                            Engellendi
+                            Engeli Kaldır
                         </button>
                     </form>
                 @else

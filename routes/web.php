@@ -7,10 +7,13 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NotificationController;
+
 
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
+
 Route::get('/index', [PostController::class, 'index']);
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
@@ -24,7 +27,9 @@ Route::prefix('posts')->group(function () {
 
 });
 
+
 Route::post('/comments', [CommentController::class, 'comment'])->name('comments.store');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
 
 Route::prefix('users')->group(function(){
@@ -41,10 +46,12 @@ Route::post('/unblock/{user}', [UserController::class, 'unblockUser'])->name('un
 
 Route::post('/follow/{user}', [ProfileController::class, 'follow'])->name('follow');
 Route::post('/follow-request/accept/{followRequest}', [ProfileController::class, 'acceptFollowRequest'])->name('follow.accept');
-Route::get('/follow-requests', [ProfileController::class, 'showFollowRequests'])->name('follow.requests');
 Route::post('/follow-request/decline/{followRequest}', [ProfileController::class, 'declineFollowRequest'])->name('follow.decline');
 Route::delete('/unfollow/{user}', [ProfileController::class, 'unfollow'])->name('unfollow');
 
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+Route::get('/mentions/{mention}', [NotificationController::class, 'showMentionedComment'])->name('mentions.comment');
 
 // Auth kontrolörleri
 Route::post('login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');

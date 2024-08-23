@@ -4,7 +4,6 @@
         (!$post->user->is_private && !$post->user->isBlockedBy(auth()->id())) ||
         ($post->user->followers->contains(auth()->user()) && !$post->user->isBlockedBy(auth()->id()));
     @endphp
-
     @if($canView)
             <div id="{{ $post->id }}" class="post border-b border-zinc-700 pb-4" data-post-id="{{ $post->id }}">
                 <div>
@@ -15,7 +14,7 @@
                             </a>
                         </div>
                         <div class="w-full ml-3 overflow-hidden max-w-lg">
-                            <span class="text-white">{{ $post->user->name }} (@({{ $post->user->name }}))</span>
+                            <span class="text-white">{{ $post->user->name }} @ {{ $post->user->name }}</span>
                         </div>
                         <div class="flex justify-end relative">
                             <div class="relative group">
@@ -24,7 +23,6 @@
                                     @if(auth()->user()->id === $post->user_id)
                                         <a href="#" class="block px-4 py-2 hover:bg-gray-700 edit-button" data-post-id="{{ $post->id }}">Düzenle</a>
                                         <a href="#" class="block px-4 py-2 hover:bg-gray-700 delete-button" data-post-id="{{ $post->id }}">Sil</a>
-
                                     @else
                                         <a href="#" class="block px-4 py-2 hover:bg-gray-700 block-button" data-user-id="{{ $post->user_id }}">Kullanıcıyı Engelle</a>
                                     @endif
@@ -57,6 +55,7 @@
                             <button type="submit">Sil</button>
                         </form>
                     </div>
+                    <!-- post -->
                     <a href="{{ route('post.show', $post->id) }}" class="block">
                         <div class="container relative flex flex-col px-10 py-2 ml-4 max-w-xl">
                             <div><p class="text-white mt-2">{{ $post->content }}</p></div>
@@ -75,7 +74,7 @@
                     </a>
                     <!-- comment fav ret icons -->
                     <div class="post-actions flex ml-16 text-white">
-                        <button class="comment-button material-icons"
+                        <button class="material-icons"
                                 data-post-id="{{ $post->id }}">mode_comment
                         </button>
                         <span class="mr-2" id="comment-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
@@ -100,26 +99,22 @@
                         <i class="material-icons ml-40">bookmark_added</i>
                         <i class="material-icons">upload</i>
                     </div>
-                    <div id="comment-section-{{ $post->id }}" class="hidden">
-                        <form action="{{ route('comments.store') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="post_id" value="{{ $post->id }}">
-                            <textarea name="body" placeholder="Yorumunuzu yazın" class="w-[33rem] h-16 p-4 text-white bg-black focus:outline-none focus:ring-2 border-b border-zinc-700"></textarea>
-                            <button type="submit" class="text-white">Yorum Gönder</button>
-                        </form>
-                    </div>
                 </div>
             </div>
     @endif
 @endif
-
 @vite('resources/js/blockUser.js')
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        //like butonu
+        let isProcessing = false; // Tüm işlem bayrağı
+
+        // like butonu
         document.querySelectorAll('.like-button').forEach(button => {
             button.addEventListener('click', function() {
+                if (isProcessing) return;
+                isProcessing = true;
+
                 const postId = this.getAttribute('data-post-id');
                 const postOwnerId = this.getAttribute('data-post-owner-id');
                 const currentUserId = this.getAttribute('data-current-user-id');
@@ -134,7 +129,22 @@
                     })
                     .then(response => {
                         if (response.ok) {
-                            location.reload();
+                            return response.text();
+                        } else {
+                            return response.text().then(text => {
+                                throw new Error(text);
+                            });
+                        }
+                    })
+                    .then(data => {
+                        const likeIcon = document.getElementById(`like-icon-${postId}`);
+                        const likeCountSpan = document.getElementById(`like-count-${postId}`);
+                        const isLiked = likeIcon.textContent.trim() === 'favorite';
+
+                        if (data.includes('Beğeni işlemi başarılı.')) {
+                            likeIcon.textContent = isLiked ? 'favorite_border' : 'favorite';
+                            likeIcon.className = isLiked ? 'text-gray-500' : 'text-red-500';
+                            likeCountSpan.textContent = parseInt(likeCountSpan.textContent) + (isLiked ? -1 : 1);
                         } else {
                             alert("Beğenme işlemi başarısız oldu.");
                         }
@@ -142,13 +152,18 @@
                     .catch(error => {
                         console.error('Error:', error);
                         alert("Beğenme işlemi başarısız oldu.");
+                    })
+                    .finally(() => {
+                        isProcessing = false; // İşlem bitti
                     });
                 } else {
                     alert("Kendi postunuzu beğenemezsiniz.");
+                    isProcessing = false; // İşlem bitti
                 }
             });
         });
-        //post daha-fazlası
+
+        // post daha-fazlası
         document.querySelectorAll('.more-options').forEach(button => {
             button.addEventListener('click', function(event) {
                 event.stopPropagation();
@@ -172,7 +187,7 @@
             });
         });
 
-        //post dropdown
+        // post dropdown
         document.addEventListener('click', function(event) {
             if (!event.target.closest('.more-options') && !event.target.closest('.dropdown-menu')) {
                 document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
@@ -181,7 +196,7 @@
             }
         });
 
-        //post-edit
+        // post-edit
         document.querySelectorAll('.edit-button').forEach(button => {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
@@ -189,59 +204,42 @@
                 const postId = this.getAttribute('data-post-id');
                 const editForm = document.getElementById('edit-form-' + postId);
 
-                editForm.classList.toggle('hidden');
+                if (editForm) {
+                    editForm.classList.toggle('hidden');
+                }
             });
         });
 
-        //post-delete
+        // post-delete
         document.querySelectorAll('.delete-button').forEach(button => {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
-
                 const postId = this.getAttribute('data-post-id');
-                const confirmation = confirm('Bu postu silmek istediğinizden emin misiniz?');
 
-                if (confirmation) {
-                    fetch(`/posts/${postId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.text();
-                        } else {
-                            throw new Error('Silme işlemi başarısız oldu');
-                        }
-                    })
-                    .then(data => {
-                        alert('Post başarıyla silindi!');
-                        location.reload();
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                }
-            }, { once: true });
-        });
-
-        //post-comment
-        const commentButtons = document.querySelectorAll('.comment-button');
-            commentButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const postId = this.getAttribute('data-post-id');
-                    const commentSection = document.getElementById(`comment-section-${postId}`);
-
-                    // Yorum bölümü gizliyse göster, gösterliyse gizle
-                    if (commentSection.classList.contains('hidden')) {
-                        commentSection.classList.remove('hidden');
-                    } else {
-                        commentSection.classList.add('hidden');
+                fetch(`/posts/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                     }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Silme işlemi başarısız oldu');
+                    }
+                })
+                .then(data => {
+                    alert('Post başarıyla silindi!');
+                    location.reload(); // Sayfayı yenile
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
+            },
+            { once: true }); // 'once: true' kullanarak bu event listener'ın sadece bir kez çalışması hedefleniyor
         });
-    });
+});
 
 </script>

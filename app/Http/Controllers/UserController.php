@@ -32,12 +32,19 @@ class UserController extends Controller
     public function blockUser(Request $request, $user)
     {
         $userToBlock = User::findOrFail($user);
-        $blockedUser = BlockedUser::firstOrCreate([
+
+        auth()->user()->following()->detach($userToBlock->id);
+        $userToBlock->followers()->detach(auth()->id());
+
+        auth()->user()->updateFollowingCount();
+        $userToBlock->updateFollowerCount();
+
+        BlockedUser::firstOrCreate([
             'user_id' => auth()->id(),
             'blocked_user_id' => $userToBlock->id
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('message', 'Kullanıcı başarıyla engellendi.');
     }
 
     public function unblockUser(Request $request, $user)

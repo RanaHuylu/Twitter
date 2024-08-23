@@ -48,13 +48,20 @@
                 <h3 class="text-white text-xl">Yorumlar</h3>
                 <div class="rounded-lg p-4 border-b border-zinc-700">
                     @foreach($post->comments as $comment)
-                    <div class="comment border-b border-zinc-700 py-2">
-                        <p class="text-white">{{ $comment->body }}</p>
-                        <small class="text-gray-500">Yazan: {{ $comment->user->name }}</small>
-                    </div>
-                @endforeach
+                        <!-- Yorum Silme Formu -->
+                        @can('delete', $comment)
+                        <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="flex justify-end mt-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500">X</button>
+                        </form>
+                        @endcan
+                        <div class="comment border-b border-zinc-700 py-2">
+                            <p class="text-white">{{ $comment->body }}</p>
+                            <small class="text-gray-500">Yazan: {{ $comment->user->name }}</small>
+                        </div>
+                    @endforeach
                 </div>
-
 
                 <!-- Yorum Ekleme Formu -->
                 <form action="{{ route('comments.store') }}" method="POST">

@@ -7,6 +7,9 @@ use App\Models\PostType;
 use App\Models\PostMedia;
 use App\Models\Like;
 use App\Models\User;
+use App\Models\Mention;
+use App\Notifications\MentionNotification;
+use Illuminate\Support\Facades\Notification;
 use App\Models\FollowRequest;
 
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +39,9 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|mimetypes:video/mp4,video/avi,video/mpeg|max:10240',
         ]);
-
+        if (empty($request->content) && !$request->hasFile('image') && !$request->hasFile('video')) {
+            return redirect()->back()->withErrors(['error' => 'En az bir içerik (metin, resim veya video) eklemelisiniz.']);
+        }
         $postTypeId = PostType::where('type_name', 'text')->first()->id;
         $mediaType = null;
         $mediaPath = null;
@@ -46,9 +51,14 @@ class PostController extends Controller
             $postTypeId = PostType::where('type_name', 'image')->first()->id;
             $mediaType = 'image';
         } elseif ($request->hasFile('video')) {
-            $mediaPath = $request->file('video')->store('media', 'public');
-            $postTypeId = PostType::where('type_name', 'video')->first()->id;
-            $mediaType = 'video';
+            try {
+                $mediaPath = $request->file('video')->store('media', 'public');
+                $postTypeId = PostType::where('type_name', 'video')->first()->id;
+                $mediaType = 'video';
+            } catch (\Exception $e) {
+                return redirect()->back()->withErrors(['error' => 'Video yükleme başarısız: ' . $e->getMessage()]);
+            }
+
         }
 
         $post = Post::create([
@@ -65,6 +75,22 @@ class PostController extends Controller
             ]);
         }
 
+        // Etiketlenen kullanıcıları bulma
+        preg_match_all('/@([a-zA-Z0-9_]+)/', $request->content, $matches);
+        $mentionedUsers = User::whereIn('name', $matches[1])->get();
+
+        // Mention kaydı
+        foreach ($mentionedUsers as $mentionedUser) {
+            Mention::create([
+                'user_id' => Auth::id(),
+                'mentioned_user_id' => $mentionedUser->id,
+                'post_id' => $post->id,
+                'comment_id' => null, // Yorum olmadığı için null
+            ]);
+
+            // Bildirim gönderme
+            $mentionedUser->notify(new MentionNotification($post));
+        }
 
         return redirect()->route('index')->with('success', 'Post başarıyla eklendi!');
 
@@ -82,14 +108,13 @@ class PostController extends Controller
         if ($user->likes()->where('post_id', $id)->exists()) {
             $user->likes()->where('post_id', $id)->delete();
             $post->like_count -= 1;
-            $post->save();
-            return redirect()->back()->with('status', 200);
         } else {
             $user->likes()->create(['post_id' => $id]);
             $post->like_count += 1;
-            $post->save();
-            return redirect()->back()->with('status', 200);
         }
+
+        $post->save();
+        return response('Beğeni işlemi başarılı.', 200);
     }
 
     public function update(Request $request, Post $post)

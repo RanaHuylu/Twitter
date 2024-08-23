@@ -2,8 +2,9 @@
 @section('content')
 
 <div class="container mt-4">
-    <h1 class="text-white">Takip İstekleri</h1>
+    <h1 class="text-white">Bildirimler</h1>
 
+    <h2 class="text-white mt-4">Takip Talepleri</h2>
     @if(session('message'))
         <div class="alert alert-success text-white">
             {{ session('message') }}
@@ -16,8 +17,9 @@
         </div>
     @endif
 
-    <div class="container bg-zinc-800 mt-4 rounded-lg">
+    <div class="container bg-zinc-800  rounded-lg">
         <div class="p-4">
+            <!-- Takip istekleri -->
             <ul class="list-disc list-inside">
                 @forelse($followRequests as $request)
                     <li class="text-white mb-2">
@@ -42,6 +44,25 @@
         </div>
 
     </div>
+    <!-- Etiket bildirimleri -->
+    <h2 class="text-white mt-7">Etiket Bildirimleri</h2>
+    <div class="container bg-zinc-800  rounded-lg">
+        <div class="p-4">
+            <ul class="list-disc list-inside text-white">
+                @foreach($mentions as $mention)
+                    <li>
+                        {{ $mention->user->name }} seni
+                        @if($mention->post_id)
+                            <a href="{{ route('post.show', $mention->post_id) }}">bir postta</a>
+                        @else
+                            <a href="{{ route('mentions.comment', $mention->comment_id) }}">bir yorumda</a>
+                        @endif
+                        etiketledi.
+                        {{ \Carbon\Carbon::parse($mention->created_at)->format('d/m/Y - H:i') }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
 </div>
-
 @endsection

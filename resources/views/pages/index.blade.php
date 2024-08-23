@@ -27,8 +27,9 @@
                             <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/profile.png') }}" alt="" class="size-10 rounded-full">
                             <form action="{{ route('posts') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <textarea class="w-[33rem] h-16 p-4 text-white bg-black focus:outline-none focus:ring-2 border-b border-zinc-700" name="content" placeholder="Neler oluyor?" required></textarea>
+                                <textarea class="w-[33rem] h-16 p-4 text-white bg-black focus:outline-none focus:ring-2 border-b border-zinc-700" name="content" placeholder="Neler oluyor?"></textarea>
                                 <input type="file" name="image" id="image" class="hidden">
+                                <input type="file" name="video" id="video" class="hidden">
                                 <div class="flex justify-between mt-4">
                                     <div class="flex flex-row ml-8 space-x-2">
                                         <label for="image" class="cursor-pointer">
@@ -38,6 +39,12 @@
                                                     class="absolute left-1/2 transform -translate-x-1/2 -translate-y-full mt-2 w-max bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100">
                                                     Medya
                                                 </span>
+                                            </div>
+                                        </label>
+                                        <label for="video" class="cursor-pointer">
+                                            <div class="relative group">
+                                                <i class="material-icons text-cyan-600 text-xl">video_library</i>
+                                                <span class="absolute left-1/2 transform -translate-x-1/2 -translate-y-full mt-2 w-max bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100">Video</span>
                                             </div>
                                         </label>
                                         <div class="relative group">

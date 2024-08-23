@@ -15,7 +15,7 @@
                     <span>Arama</span>
                 </div>
                 <div>
-                    <a href="{{ route('follow.requests') }}" class="btn btn-primary">
+                    <a href="{{ route('notifications.index') }}" class="btn btn-primary">
                         <i class="material-icons">notifications</i>
                         <span>Bildirimler</span></a>
                 </div>
@@ -56,8 +56,8 @@
             <div class="mt-10 p-6 max-w-72 h-16 hover:bg-zinc-900 rounded-full shadow-lg flex items-center space-x-4">
                 <div class="shrink-0">
                     @if(isset($user))
-                    <img src="{{ Auth::user()->profile_image ? asset('storage/' . Auth::user()->profile_image) : asset('images/profile.png') }}" alt="" class="size-10 rounded-full">
-                 @endif
+                        <img src="{{ $profileImage }}" alt="" class="size-10 rounded-full">
+                    @endif
                 </div>
                 <div>
                     <div class="text-l font-medium text-white">{{ Auth::user()->name }}</div>

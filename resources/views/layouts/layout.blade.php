@@ -21,14 +21,12 @@
     </style>
 </head>
 <body class="bg-black">
-<div class="flex flex-row">
-    <div class="basis-1/4 h-max ml-28 mt-4 fixed">@include('inc.leftsidebar')</div>
+    <div class="flex flex-row">
+        <div class="basis-1/4 h-max ml-28 mt-4 fixed">@include('inc.leftsidebar')</div>
 
-    <div class="basis-2/4 ml-[25rem]">@yield('content')</div>
+        <div class="basis-2/4 ml-[25rem]">@yield('content')</div>
 
-    <div class="basis-1/4 mt-4 mr-28 ml-4">@include('inc.rightsidebar')</div>
-</div>
-
-
+        <div class="basis-1/4 mt-4 mr-28 ml-4">@include('inc.rightsidebar')</div>
+    </div>
 </body>
 </html>

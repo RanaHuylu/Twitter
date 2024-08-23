@@ -15,6 +15,7 @@
                     <!--Arama sonuçları burada gözükecek-->
                 </div>
                 <div class="mt-20 container border border-zinc-800 rounded-lg p-4">
+                    <!-- Gündemler -->
                     <span class="text-white text-2xl font-bold">Gündemler</span>
                     <div class="mt-4 hover:bg-zinc-900 rounded-lg">
                         <p class="text-l font-medium text-white">1.Gündem</p>
@@ -45,59 +46,33 @@
                         </div>
                     </div>
                 </div>
+                <!-- Kimi takip etmeli -->
                 <div class="container border border-zinc-800 mt-10 rounded-lg p-4">
                     <span class="text-white text-2xl font-bold">Kimi Takip Etmeli</span>
-                    <div class="mt-4 p-6 h-16 hover:bg-zinc-900 shadow-lg flex items-center space-x-4">
-                        <div class="shrink-0">
-                            <img class="size-10 rounded-full" src="images/profile.png" alt="">
+                    @forelse($suggestedUsers as $user)
+                        <div class="mt-4 p-6 h-16 hover:bg-zinc-900 shadow-lg flex justify-between items-center space-x-4">
+                            <a href="{{route('profile.index', $user->id)}}">
+                            <div class="shrink-0">
+                                <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/profile.png') }}" alt="" class="rounded-full size-10">
+                            </div>
+                            </a>
+                            <div class="">
+                                <div class="text-l font-medium text-white">{{ $user->name }}</div>
+                                <p class="text-slate-500">@ {{ $user->name }}</p>
+                            </div>
+                            <div></div>
+                            <div class="">
+                                <form action="{{ route('follow', $user) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="bg-white rounded-full w-24 p-2">Takip Et</button>
+                                </form>
+                            </div>
                         </div>
-                        <div>
-                            <div class="text-l font-medium text-white">İsim</div>
-                            <p class="text-slate-500">@kullanıcıadi</p>
-                        </div>
-                        <div class="flex">
-                            <button class="bg-white rounded-full w-24 p-2">Takip Et</button>
-                        </div>
+                        @empty
+        <li>Takip edilecek kullanıcı bulunamadı.</li>
+                        @endforelse
                     </div>
-                    <div class="mt-4 p-6 h-16 hover:bg-zinc-900 shadow-lg flex items-center space-x-4">
-                        <div class="shrink-0">
-                            <img class="size-10 rounded-full" src="images/profile.png" alt="">
-                        </div>
-                        <div>
-                            <div class="text-l font-medium text-white">İsim</div>
-                            <p class="text-slate-500">@kullanıcıadi</p>
-                        </div>
-                        <div class="flex">
-                            <button class="bg-white rounded-full w-24 p-2">Takip Et</button>
-                        </div>
-                    </div>
-                    <div class="mt-4 p-6 h-16 hover:bg-zinc-900 shadow-lg flex items-center space-x-4">
-                        <div class="shrink-0">
-                            <img class="size-10 rounded-full" src="images/profile.png" alt="">
-                        </div>
-                        <div>
-                            <div class="text-l font-medium text-white">İsim</div>
-                            <p class="text-slate-500">@kullanıcıadi</p>
-                        </div>
-                        <div class="flex">
-                            <button class="bg-white rounded-full w-24 p-2">Takip Et</button>
-                        </div>
-                    </div>
-                    <div class="mt-4 p-6 h-16 hover:bg-zinc-900 shadow-lg flex items-center space-x-4">
-                        <div class="shrink-0">
-                            <img class="size-10 rounded-full" src="images/profile.png" alt="">
-                        </div>
-                        <div>
-                            <div class="text-l font-medium text-white">İsim</div>
-                            <p class="text-slate-500">@kullanıcıadi</p>
-                        </div>
-                        <div class="flex">
-                            <button class="bg-white rounded-full w-24 p-2">Takip Et</button>
-                        </div>
-                    </div>
-                </div>
             </div>
-
         </div>
     </div>
 </div>
