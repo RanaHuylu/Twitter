@@ -34,7 +34,7 @@
                                     <div class="flex flex-row ml-8 space-x-2">
                                         <label for="image" class="cursor-pointer">
                                             <div class="relative group">
-                                                <i class="material-icons text-cyan-600 text-xl">image</i> test
+                                                <i class="material-icons text-cyan-600 text-xl">image</i>
                                                 <span
                                                     class="absolute left-1/2 transform -translate-x-1/2 -translate-y-full mt-2 w-max bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100">
                                                     Medya
