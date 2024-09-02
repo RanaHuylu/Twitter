@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 
-<div class="container mt-4">
+<div class="container mt-4 px-8">
     <h1 class="text-white">Bildirimler</h1>
 
     <h2 class="text-white mt-4">Takip Talepleri</h2>

@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         @empty
-        <li>Takip edilecek kullanıcı bulunamadı.</li>
+                        <li>Takip edilecek kullanıcı bulunamadı.</li>
                         @endforelse
                     </div>
             </div>

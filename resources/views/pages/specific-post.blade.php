@@ -1,21 +1,20 @@
 @extends('layouts.layout')
 @section('content')
-    <!-- Top -->
-    <div class="z-10 fixed bg-slate-950 w-[42.7%] flex flex-row border border-zinc-700">
-        <div class="flex ml-2 h-16 justify-center items-center">
-            <div class="relative group hover:bg-zinc-900 rounded-full">
-                <a href="{{ route('index') }}">
-                    <i class="material-icons text-white text-xl">arrow_back</i>
-                </a>
-                <span
-                    class="absolute left-1/2 transform -translate-x-1/2 -translate-y-full mt-2 w-max bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100">
-                    Geri
-                </span>
+    <div class="container mx-auto border-x border-zinc-800 mb-16">
+        <!-- Top -->
+        <div class="z-10 bg-slate-950 w-full flex flex-row border border-zinc-700">
+            <div class="flex ml-2 h-16 justify-center items-center">
+                <div class="relative group hover:bg-zinc-900 rounded-full">
+                    <a href="{{ route('index') }}">
+                        <i class="material-icons text-white text-xl">arrow_back</i>
+                    </a>
+                    <span
+                        class="absolute left-1/2 transform -translate-x-1/2 -translate-y-full mt-2 w-max bg-black text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100">
+                        Geri
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container mt-14 mx-auto border-x border-zinc-800">
-
         <div class="post p-4" data-post-id="{{ $post->id }}">
             <div class="flex pt-4 px-4 space-x-2">
                 <div class="">

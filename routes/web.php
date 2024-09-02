@@ -16,6 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::get('/index', [PostController::class, 'index']);
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/searchpage', [SearchController::class, 'index'])->name('search.index');
 
 Route::prefix('posts')->group(function () {
     Route::get('{post}', [PostController::class, 'show'])->name('post.show');

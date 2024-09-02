@@ -5,7 +5,7 @@
         ($post->user->followers->contains(auth()->user()) && !$post->user->isBlockedBy(auth()->id()));
     @endphp
     @if($canView)
-            <div id="{{ $post->id }}" class="post border-b border-zinc-700 pb-4" data-post-id="{{ $post->id }}">
+            <div id="{{ $post->id }}" class="post border-t border-zinc-700 pb-4" data-post-id="{{ $post->id }}">
                 <div>
                     <div class="flex pt-4 px-4 space-x-2">
                         <div class="">
@@ -37,7 +37,7 @@
                             @method('PUT')
                             <div class="mb-4 text-white">
                                 <label for="content-{{ $post->id }}" class="flex items-center">Metin:</label>
-                                <textarea id="content" name="content" class="w-[33rem] h-16 p-4 text-white bg-black focus:outline-none focus:ring-2 border-b border-zinc-700">{{ $post->content }}</textarea>
+                                <textarea id="content" name="content" class="w-[33rem] max-md:w-full h-16 p-4 text-white bg-black focus:outline-none focus:ring-2 border-b border-zinc-700">{{ $post->content }}</textarea>
                             </div>
                             <div class="mb-4 text-white">
                                 <label for="image-{{ $post->id }}" class="flex items-center">Yeni Resim:</label>
@@ -57,7 +57,7 @@
                     </div>
                     <!-- post -->
                     <a href="{{ route('post.show', $post->id) }}" class="block">
-                        <div class="container relative flex flex-col px-10 py-2 ml-4 max-w-xl">
+                        <div class="container flex flex-col px-10 py-2 ml-4 max-w-xl">
                             <div><p class="text-white mt-2">{{ $post->content }}</p></div>
                             <div class="flex justify-center items-center">
                                 @foreach ($post->postMedia as $media)
@@ -73,7 +73,7 @@
                         </div>
                     </a>
                     <!-- comment fav ret icons -->
-                    <div class="post-actions flex ml-16 text-white">
+                    <div class="post-actions flex ml-16 text-white max-[400px]:ml-8 max-[400px]:justify-start">
                         <button class="material-icons"
                                 data-post-id="{{ $post->id }}">mode_comment
                         </button>
@@ -96,7 +96,7 @@
                         </div>
                         <i class="material-icons ml-2">bar_chart</i>
                         <span class="mr-2">186</span>
-                        <i class="material-icons ml-40">bookmark_added</i>
+                        <i class="material-icons ml-2 lg:ml-40">bookmark_added</i>
                         <i class="material-icons">upload</i>
                     </div>
                 </div>

@@ -3,9 +3,9 @@
 @php
     $isBlocked = auth()->user()->blockedUsers()->where('blocked_user_id', $user->id)->exists();
 @endphp
-<div class="border-x border-zinc-700">
+<div class="mb-16">
     <!-- Top -->
-    <div class="z-10 fixed bg-slate-950 w-[43.5%] flex flex-row border-b border-zinc-700">
+    <div class="z-10 bg-black w-full flex flex-row border-b border-zinc-700">
         <div class="flex ml-2 h-16 justify-center items-center">
             <div class="relative group hover:bg-zinc-900 rounded-full">
                 <a href="{{ route('index') }}">
@@ -24,8 +24,8 @@
         <img src="{{ $user->background_image ? asset('storage/' . $user->background_image) : asset('images/fon.jpg') }}" alt="" class="h-72 w-full">
     </div>
     <div class="relative ml-4 ">
-        <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/profile.png') }}" alt="" class="rounded-full max-w-32 outline outline-4 -top-20 absolute">
-        <div class="flex justify-end mt-3 mr-4 space-x-5 text-white">
+        <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/profile.png') }}" alt="" class="rounded-full w-32 outline outline-4 -top-20 absolute max-[500px]:w-24">
+        <div class="flex justify-end mt-3 mr-4 space-x-5 text-white max-[500px]:justify-start max-[500px]:pt-10">
             <i class="material-icons outline outline-offset-2 outline-1 rounded-full">more_horiz</i>
             <i class="material-icons outline outline-offset-2 outline-1 rounded-full">mail</i>
             <i class="material-icons outline outline-offset-2 outline-1 rounded-full">notifications</i>
