@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>X</title>
+    <link rel="icon" href="{{ asset('images/x.png') }}" type="image/x-icon">
 
     <style>
         /*Post Dropdown Menüsü için Stil */

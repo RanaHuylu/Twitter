@@ -9,7 +9,7 @@
                 <div class="md:hidden ml-4 mt-2">
                     <div class="flex flex-row items-center justify-between">
                         <div><img src="{{ $profileImage }}" alt="" class="size-9 rounded-full cursor-pointer" id="profileImage"></div>
-                        <div><a href="{{route('index')}}"><img src="{{asset('images/x.jpg')}}" style="height:36px" class=""></a></div>
+                        <div><a href="{{route('index')}}"><img src="{{asset('images/x-white.png')}}" style="height:36px" class=""></a></div>
                         <div></div>
                     </div>
                     <!-- Sidebar -->

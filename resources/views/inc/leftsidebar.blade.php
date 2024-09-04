@@ -3,7 +3,7 @@
         <!-- LeftSidebar -- > md -->
         <div class="max-md:hidden">
             <div class="flex flex-col gap-4 text-white text-2xl">
-                <a href="{{route('index')}}"><img src="{{asset('images/x.jpg')}}" style="height:36px"></a>
+                <a href="{{route('index')}}"><img src="{{asset('images/x-white.png')}}" style="height:36px"></a>
                 <div>
                     <a href="{{route('index')}}">
                         <i class="material-icons">home</i>
