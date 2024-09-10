@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('content')
 
-<div class="container mt-4 px-8">
+<div class="mt-4 px-8">
     <h1 class="text-white">Bildirimler</h1>
 
     <h2 class="text-white mt-4">Takip Talepleri</h2>
@@ -17,7 +17,7 @@
         </div>
     @endif
 
-    <div class="container bg-zinc-800  rounded-lg">
+    <div class="bg-zinc-800 rounded-lg">
         <div class="p-4">
             <!-- Takip istekleri -->
             <ul class="list-disc list-inside">
@@ -46,7 +46,7 @@
     </div>
     <!-- Etiket bildirimleri -->
     <h2 class="text-white mt-7">Etiket Bildirimleri</h2>
-    <div class="container bg-zinc-800  rounded-lg">
+    <div class="bg-zinc-800  rounded-lg">
         <div class="p-4">
             <ul class="list-disc list-inside text-white">
                 @foreach($mentions as $mention)

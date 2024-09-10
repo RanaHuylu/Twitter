@@ -1,5 +1,5 @@
 <div class="mx-auto">
-    <div class="container">
+    <div>
         <!-- LeftSidebar -- > md -->
         <div class="max-md:hidden">
             <div class="flex flex-col gap-4 text-white text-2xl">
@@ -72,9 +72,7 @@
             <!-- xl modu için çıkış yap alanı -->
             <div class="mt-10 p-6 max-w-72 h-16 hover:bg-zinc-900 rounded-full shadow-xl flex items-center space-x-4 max-xl:hidden">
                 <div class="shrink-0">
-                    @if(isset($user))
-                        <img src="{{ $profileImage }}" alt="" class="size-10 rounded-full">
-                    @endif
+                    <img src="{{ $profileImage }}" alt="" class="size-10 rounded-full">
                 </div>
                 <div>
                     <div class="text-l font-medium text-white">{{ Auth::user()->name }}</div>

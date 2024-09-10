@@ -1,8 +1,8 @@
 <div class="mx-auto">
-    <div class="container flex ">
+    <div class="flex ">
         <!-- Sag Sidebar -->
         <div class="flex">
-            <div class="container w-full">
+            <div class="w-full">
                 <div class="bg-zinc-800 rounded-full pointer-events-auto fixed">
                     <form id="search-form" action="{{ route('search') }}" method="GET">
                         <button type="submit" class="hidden lg:flex items-center text-sm leading-6 text-slate-400 rounded-md py-1.5 pl-2 pr-3 w-80 h-12">
@@ -14,7 +14,7 @@
                 <div id="search-results" class="bg-zinc-800 rounded-lg fixed mt-12 w-80">
                     <!--Arama sonuçları burada gözükecek-->
                 </div>
-                <div class="mt-20 container border border-zinc-800 rounded-lg p-4">
+                <div class="mt-20 border border-zinc-800 rounded-lg p-4">
                     <!-- Gündemler -->
                     <span class="text-white text-2xl font-bold">Gündemler</span>
                     <div class="mt-4 hover:bg-zinc-900 rounded-lg">
@@ -47,18 +47,15 @@
                     </div>
                 </div>
                 <!-- Kimi takip etmeli -->
-                <div class="container border border-zinc-800 mt-10 rounded-lg p-4">
+                <div class="border border-zinc-800 mt-10 rounded-lg p-4">
                     <span class="text-white text-2xl font-bold">Kimi Takip Etmeli</span>
                     @forelse($suggestedUsers as $user)
                         <div class="mt-4 p-6 h-16 hover:bg-zinc-900 shadow-lg flex justify-between items-center space-x-4">
                             <a href="{{route('profile.index', $user->id)}}">
-                            <div class="shrink-0">
                                 <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/profile.png') }}" alt="" class="rounded-full size-10">
-                            </div>
                             </a>
                             <div class="">
                                 <div class="text-l font-medium text-white">{{ $user->name }}</div>
-                                <p class="text-slate-500">@ {{ $user->name }}</p>
                             </div>
                             <div></div>
                             <div class="">

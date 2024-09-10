@@ -2,14 +2,14 @@
 @section('content')
 
     <div class="mx-auto mb-16">
-        <div class="container flex">
+        <div class="flex">
            <!-- Ana Bölüm -->
             <div class="w-full">
                 <!-- topbar -- < md -->
                 <div class="md:hidden ml-4 mt-2">
                     <div class="flex flex-row items-center justify-between">
                         <div><img src="{{ $profileImage }}" alt="" class="size-9 rounded-full cursor-pointer" id="profileImage"></div>
-                        <div><a href="{{route('index')}}"><img src="{{asset('images/x-white.png')}}" style="height:36px" class=""></a></div>
+                        <div><a href="{{route('index')}}"><img src="{{asset('images/x-white.png')}}" style="height:36px" class="mr-16"></a></div>
                         <div></div>
                     </div>
                     <!-- Sidebar -->
@@ -65,7 +65,7 @@
                     <!-- w-full h-16 p-4 text-white bg-black focus:outline-none focus:ring-2 border-b border-zinc-700  <div class="hidden peer-checked/published:block text-white">Your post will be publicly visible on your site.</div>-->
                 </div>
                 <div class="flex border-b border-zinc-700">
-                    <div class="container p-4">
+                    <div class="w-full p-4">
                         <div class="flex">
                             <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('images/profile.png') }}" alt="" class="size-10 rounded-full">
                             <form action="{{ route('posts') }}" method="POST" enctype="multipart/form-data" class="w-full ml-2">

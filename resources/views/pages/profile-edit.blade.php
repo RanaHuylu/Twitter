@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-<div class="container mx-auto p-4">
+<div class="mx-auto p-4">
     <h1 class="text-2xl font-bold text-white">Profili Düzenle</h1>
 
     <form action="{{ route('profile.update' , $user->id) }}" method="POST" enctype="multipart/form-data">

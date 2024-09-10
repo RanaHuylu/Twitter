@@ -57,7 +57,7 @@
                     </div>
                     <!-- post -->
                     <a href="{{ route('post.show', $post->id) }}" class="block">
-                        <div class="container flex flex-col px-10 py-2 ml-4 max-w-xl">
+                        <div class=" flex  px-10 py-2 ml-4 mr-4 max-w-[45rem]">
                             <div><p class="text-white mt-2">{{ $post->content }}</p></div>
                             <div class="flex justify-center items-center">
                                 @foreach ($post->postMedia as $media)
@@ -73,31 +73,35 @@
                         </div>
                     </a>
                     <!-- comment fav ret icons -->
-                    <div class="post-actions flex ml-16 text-white max-[400px]:ml-8 max-[400px]:justify-start">
-                        <button class="material-icons"
-                                data-post-id="{{ $post->id }}">mode_comment
-                        </button>
-                        <span class="mr-2" id="comment-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
+                    <div class="post-actions flex justify-between mx-16 text-white max-[400px]:ml-4 max-[400px]:mr-2">
+                        <div class="flex flex-row">
+                            <button class="material-icons"
+                                    data-post-id="{{ $post->id }}">mode_comment
+                            </button>
+                            <span class="mr-2" id="comment-count-{{ $post->id }}">{{ $post->comments->count() }}</span>
 
-                        <i class="material-icons">reply</i>
-                        <span class="mr-2">186</span>
-                        <div id="post-{{ $post->id }}" class="post-container">
-                                    <button class="like-button material-icons"
-                                            data-post-id="{{ $post->id }}"
-                                            data-post-owner-id="{{ $post->user_id }}"
-                                            data-current-user-id="{{ auth()->user()->id }}">
-                                        <span id="like-icon-{{ $post->id }}" class="{{ $post->isLikedByUser() ? 'text-red-500' : 'text-gray-500' }}">
-                                            {{ $post->isLikedByUser() ? 'favorite' : 'favorite_border' }}
-                                        </span>
-                                    </button>
-                                <span class="text-white" id="like-count-{{ $post->id }}">
-                                    {{ $post->like_count }}
-                                </span>
+                            <i class="material-icons">reply</i>
+                            <span class="mr-2">186</span>
+                            <div id="post-{{ $post->id }}" class="post-container">
+                                        <button class="like-button material-icons"
+                                                data-post-id="{{ $post->id }}"
+                                                data-post-owner-id="{{ $post->user_id }}"
+                                                data-current-user-id="{{ auth()->user()->id }}">
+                                            <span id="like-icon-{{ $post->id }}" class="{{ $post->isLikedByUser() ? 'text-red-500' : 'text-gray-500' }}">
+                                                {{ $post->isLikedByUser() ? 'favorite' : 'favorite_border' }}
+                                            </span>
+                                        </button>
+                                    <span class="text-white" id="like-count-{{ $post->id }}">
+                                        {{ $post->like_count }}
+                                    </span>
+                            </div>
+                            <i class="material-icons ml-2">bar_chart</i>
+                            <span class="mr-2">186</span>
                         </div>
-                        <i class="material-icons ml-2">bar_chart</i>
-                        <span class="mr-2">186</span>
-                        <i class="material-icons ml-2 lg:ml-40">bookmark_added</i>
-                        <i class="material-icons">upload</i>
+                        <div>
+                            <i class="material-icons ml-2 lg:ml-40">bookmark_added</i>
+                            <i class="material-icons">upload</i>
+                        </div>
                     </div>
                 </div>
             </div>

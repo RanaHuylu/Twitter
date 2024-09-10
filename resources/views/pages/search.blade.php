@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-<div class="container mt-4 px-8">
+<div class="mt-4 px-8">
     <h2 class="text-white">Arama Sonuçları:</h2>
     <form action="{{ route('search.index') }}" method="GET">
         <input type="text" name="query" value="{{ request('query') }}" placeholder="Ara...">

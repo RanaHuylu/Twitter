@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-    <div class="container mx-auto border-x border-zinc-800 mb-16">
+    <div class="mx-auto border-x border-zinc-800 mb-16">
         <!-- Top -->
         <div class="z-10 bg-slate-950 w-full flex flex-row border border-zinc-700">
             <div class="flex ml-2 h-16 justify-center items-center">
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="container relative flex flex-col px-10 py-2 ml-4 max-w-xl">
+            <div class="relative flex flex-col px-10 py-2 ml-4 max-w-xl">
                 <div><p class="text-white mt-2">{{ $post->content }}</p></div>
                 <div class="flex justify-center items-center">
                     @foreach ($post->postMedia as $media)

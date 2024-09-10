@@ -22,7 +22,7 @@
     </style>
 </head>
 <body class="bg-black">
-    <div class="flex flex-row">
+    <div class="min-h-screen flex flex-row">
         <div class="basis-1/4 ml-28 mt-4 fixed max-xl:ml-16 max-xl:basis-0">@include('inc.leftsidebar')</div>
 
         <div class="basis-2/4 md:mx-28 max-xl:basis-4/5 max-lg:basis-full max-lg:inset-x-0 max-lg:m-0 xl:mr-0 xl:ml-[25rem] overflow-hidden border-x border-zinc-700">@yield('content')</div>
